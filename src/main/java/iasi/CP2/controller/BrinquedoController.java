@@ -2,125 +2,121 @@ package iasi.CP2.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import iasi.CP2.model.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import iasi.CP2.model.Brinquedo;
 import iasi.CP2.repository.BrinquedoRepositorio;
 
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @CrossOrigin(origins = "https://exerciciorevisaojava.onrender.com")
-@RestController
+@Controller
 @RequestMapping("/api")
 public class BrinquedoController {
     @Autowired
     BrinquedoRepositorio brinquedoRepositorio;
 
     @GetMapping("/brinquedos")
-    public ResponseEntity<List<EntityModel<Brinquedo>>> getAllBrinquedos(@RequestParam(required = false) String nome) {
+    public String listAllBrinquedos(@RequestParam(required = false) String nome, Model model) {
+        List<Brinquedo> brinquedos = new ArrayList<>();
         try {
-            List<Brinquedo> brinquedos = new ArrayList<Brinquedo>();
-
-            if (nome == null)
+            if (nome == null) {
                 brinquedoRepositorio.findAll().forEach(brinquedos::add);
-            else
+            } else {
                 brinquedoRepositorio.findByNameContaining(nome).forEach(brinquedos::add);
-
-            if (brinquedos.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            List<EntityModel<Brinquedo>> brinquedosModel = brinquedos.stream()
-                    .map(brinquedo -> EntityModel.of(brinquedo,
-                            linkTo(methodOn(BrinquedoController.class).getBrinquedoById(brinquedo.getId())).withSelfRel()))
-                    .collect(Collectors.toList());
-
-            return new ResponseEntity<>(brinquedosModel, HttpStatus.OK);
+            model.addAttribute("brinquedos", brinquedos);
+            return "list"; // Nome do arquivo HTML para listar brinquedos
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            model.addAttribute("error", new ErrorResponse("Erro ao listar brinquedos.", e.getMessage()));
+            return "error";
         }
     }
 
     @GetMapping("/brinquedos/{id}")
-    public ResponseEntity<EntityModel<Brinquedo>> getBrinquedoById(@PathVariable("id") long id) {
+    public String getBrinquedoById(@PathVariable("id") long id, Model model) {
         Brinquedo brinquedo = brinquedoRepositorio.findById(id);
-
         if (brinquedo != null) {
-            EntityModel<Brinquedo> brinquedoModel = EntityModel.of(brinquedo);
-            return new ResponseEntity<>(brinquedoModel, HttpStatus.OK);
+            model.addAttribute("brinquedo", brinquedo);
+            return "detail"; // Nome do arquivo HTML para detalhes do brinquedo
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            model.addAttribute("error", new ErrorResponse("Brinquedo não encontrado.", "ID: " + id));
+            return "error"; // Nome do arquivo HTML para exibir erro
         }
+    }
+
+    @GetMapping("/brinquedos/add")
+    public String showAddBrinquedoForm(Model model) {
+        model.addAttribute("brinquedo", new Brinquedo());
+        return "add"; // Nome do arquivo HTML para adicionar brinquedos
     }
 
     @PostMapping("/brinquedos")
-    public ResponseEntity<String> createBrinquedo(@RequestBody Brinquedo brinquedo) {
+    public String createBrinquedo(@RequestBody Brinquedo brinquedo) {
         try {
             brinquedoRepositorio.save(brinquedo);
-            return new ResponseEntity<>("Brinquedo foi criado com sucesso.", HttpStatus.CREATED);
+            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return "error";
         }
     }
 
-    @PutMapping("/brinquedos/{id}")
-    public ResponseEntity<String> updateBrinquedo(@PathVariable("id") long id, @RequestBody Brinquedo brinquedo) {
-        Brinquedo _brinquedo = brinquedoRepositorio.findById(id);
+    @GetMapping("/brinquedos/edit/{id}")
+    public String showEditBrinquedoForm(@PathVariable("id") long id, Model model) {
+        Brinquedo brinquedo = brinquedoRepositorio.findById(id);
+        if (brinquedo != null) {
+            model.addAttribute("brinquedo", brinquedo);
+            return "edit"; // Nome do arquivo HTML para editar brinquedos
+        } else {
+            model.addAttribute("error", new ErrorResponse("Brinquedo não encontrado.", "ID: " + id));
+            return "error";
+        }
+    }
 
+    @PostMapping("/brinquedos/edit/{id}")
+    public String updateBrinquedo(@PathVariable("id") long id, @RequestBody Brinquedo brinquedo) {
+        Brinquedo _brinquedo = brinquedoRepositorio.findById(id);
         if (_brinquedo != null) {
-            _brinquedo.setId(id);
             _brinquedo.setNome(brinquedo.getNome());
             _brinquedo.setTipo(brinquedo.getTipo());
             _brinquedo.setClassificacao(brinquedo.getClassificacao());
             _brinquedo.setTamanho(brinquedo.getTamanho());
             _brinquedo.setPreco(brinquedo.getPreco());
 
-            brinquedoRepositorio.update(_brinquedo);
-            return new ResponseEntity<>("Brinquedo foi atualizado com sucesso.", HttpStatus.OK);
+            brinquedoRepositorio.save(_brinquedo);
+            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
         } else {
-            return new ResponseEntity<>("Não foi encontrada Brinquedo com id=" + id, HttpStatus.NOT_FOUND);
+            return "error";
         }
     }
 
-    @DeleteMapping("/brinquedos/{id}")
-    public ResponseEntity<String> deleteBriquedo(@PathVariable("id") long id) {
+    @PostMapping("/brinquedos/delete/{id}")
+    public String deleteBrinquedo(@PathVariable("id") long id) {
         try {
-            int result = brinquedoRepositorio.deleteById(id);
-            if (result == 0) {
-                return new ResponseEntity<>("Não foi encontrado Brinquedo com id=" + id, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Brinquedo foi deletada com sucesso.", HttpStatus.OK);
+            brinquedoRepositorio.deleteById(id);
+            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
-            return new ResponseEntity<>("Não é possível deletar Brinquedo.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return "error";
         }
     }
 
-    @DeleteMapping("/brinquedos")
-    public ResponseEntity<String> deleteAllBrinquedos() {
+    @PostMapping("/brinquedos/delete-all")
+    public String deleteAllBrinquedos() {
         try {
-            int numRows = brinquedoRepositorio.deleteAll();
-            return new ResponseEntity<>("Deletados " + numRows + " Brinquedo(s) com sucesso.", HttpStatus.OK);
+            brinquedoRepositorio.deleteAll();
+            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
-            return new ResponseEntity<>("Não é possível deletar Brinquedo.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return "error";
         }
-
     }
 
 }
