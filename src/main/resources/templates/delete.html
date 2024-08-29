@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Deletar Todos os Brinquedos</title>
+</head>
+<body>
+<h1>Deletar Todos os Brinquedos</h1>
+<form action="/api/brinquedos" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">Deletar Todos</button>
+</form>
+<a href="/brinquedos">Voltar à Lista</a>
+</body>
+</html>

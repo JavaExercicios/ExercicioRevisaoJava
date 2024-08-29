@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Brinquedo</title>
+</head>
+<body>
+<h1>Detalhes do Brinquedo</h1>
+<p>ID: <span th:text="${brinquedo.id}"></span></p>
+<p>Nome: <span th:text="${brinquedo.nome}"></span></p>
+<p>Tipo: <span th:text="${brinquedo.tipo}"></span></p>
+<p>Classificação: <span th:text="${brinquedo.classificacao}"></span></p>
+<p>Tamanho: <span th:text="${brinquedo.tamanho}"></span></p>
+<p>Preço: <span th:text="${brinquedo.preco}"></span></p>
+<a th:href="@{/editar-brinquedo/{id}(id=${brinquedo.id})}">Editar</a>
+<a th:href="@{/deletar-brinquedo/{id}(id=${brinquedo.id})}">Deletar</a>
+<a href="/brinquedos">Voltar à Lista</a>
+</body>
+</html>
+
