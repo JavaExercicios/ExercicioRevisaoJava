@@ -17,7 +17,7 @@ import iasi.CP2.model.Brinquedo;
 import iasi.CP2.repository.BrinquedoRepositorio;
 
 
-@CrossOrigin(origins = "https://exerciciorevisaojava.onrender.com")
+@CrossOrigin(origins = "https://exerciciorevisaojava-1.onrender.com")
 @Controller
 @RequestMapping("/api")
 public class BrinquedoController {
