@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Erro</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Ocorreu um erro</h1>
-<p th:text="${error.message}"></p>
-<p th:text="${error.details}"></p>
-<a href="#" onclick="window.history.back();">Voltar</a>
+    <div class="container">
+        <h1>Ocorreu um erro</h1>
+        <p th:text="${error.message}"></p>
+        <p th:text="${error.details}"></p>
+        <a href="#" onclick="window.history.back();">Voltar</a>
+    </div>
 </body>
 </html>
