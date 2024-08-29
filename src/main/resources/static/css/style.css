@@ -1,7 +1,7 @@
 /* Definindo um estilo global para o corpo */
 body {
     font-family: Arial, sans-serif;
-    background: url('.../images/brinquedoscapa.jpg') no-repeat center center fixed;
+    background: url('../images/brinquedoscapa.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     margin: 0;

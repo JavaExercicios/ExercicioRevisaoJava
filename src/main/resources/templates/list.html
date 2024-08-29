@@ -30,9 +30,9 @@
                 <td th:text="${brinquedo.tamanho}"></td>
                 <td th:text="${brinquedo.preco}"></td>
                 <td>
-                    <a th:href="@{/api/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
-                    <a th:href="@{/api/brinquedos/edit/{id}(id=${brinquedo.id})}">Editar</a>
-                    <a th:href="@{/api/brinquedos/delete/{id}(id=${brinquedo.id})}">Deletar</a>
+                    <a th:href="@{/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
+                    <a th:href="@{/brinquedos/edit/{id}(id=${brinquedo.id})}">Editar</a>
+                    <a th:href="@{/brinquedos/delete/{id}(id=${brinquedo.id})}">Deletar</a>
                 </td>
             </tr>
             </tbody>

@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <h1>Editar Brinquedo</h1>
-        <form action="/api/brinquedos/edit/{id}" method="post">
+        <form action="/brinquedos/edit/{id}" method="post">
             <input type="hidden" name="_method" value="put">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" th:value="${brinquedo.nome}" required><br>
@@ -22,7 +22,7 @@
             <input type="number" id="preco" name="preco" step="0.01" th:value="${brinquedo.preco}" required><br>
             <button type="submit">Atualizar Brinquedo</button>
         </form>
-        <a href="/api/brinquedos">Voltar à Lista</a>
+        <a href="/brinquedos">Voltar à Lista</a>
     </div>
 </body>
 </html>
