@@ -3,40 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Brinquedos</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-    <div class="container">
-        <h1>Lista de Brinquedos</h1>
-        <a href="/brinquedos">Adicionar Novo Brinquedo</a>
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Tipo</th>
-                <th>Classificação</th>
-                <th>Tamanho</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="brinquedo : ${brinquedos}">
-                <td th:text="${brinquedo.id}"></td>
-                <td th:text="${brinquedo.nome}"></td>
-                <td th:text="${brinquedo.tipo}"></td>
-                <td th:text="${brinquedo.classificacao}"></td>
-                <td th:text="${brinquedo.tamanho}"></td>
-                <td th:text="${brinquedo.preco}"></td>
-                <td>
-                    <a th:href="@{/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
-                    <a th:href="@{/brinquedos/edit/{id}(id=${brinquedo.id})}">Editar</a>
-                    <a th:href="@{/brinquedos/delete/{id}(id=${brinquedo.id})}">Deletar</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<h1>Lista de Brinquedos</h1>
+<a href="/adicionar-brinquedo">Adicionar Novo Brinquedo</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Classificação</th>
+        <th>Tamanho</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="brinquedo : ${brinquedos}">
+        <td th:text="${brinquedo.id}"></td>
+        <td th:text="${brinquedo.nome}"></td>
+        <td th:text="${brinquedo.tipo}"></td>
+        <td th:text="${brinquedo.classificacao}"></td>
+        <td th:text="${brinquedo.tamanho}"></td>
+        <td th:text="${brinquedo.preco}"></td>
+        <td>
+            <a th:href="@{/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
+            <a th:href="@{/editar-brinquedo/{id}(id=${brinquedo.id})}">Editar</a>
+            <a th:href="@{/deletar-brinquedo/{id}(id=${brinquedo.id})}">Deletar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
+
