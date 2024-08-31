@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Brinquedos</title>
-</head>
-<body>
-<h1>Lista de Brinquedos</h1>
-<a href="/adicionar-brinquedo">Adicionar Novo Brinquedo</a>
+<a href="/api/brinquedos/add">Adicionar Novo Brinquedo</a>
 <table>
     <thead>
     <tr>
@@ -28,13 +20,10 @@
         <td th:text="${brinquedo.tamanho}"></td>
         <td th:text="${brinquedo.preco}"></td>
         <td>
-            <a th:href="@{/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
-            <a th:href="@{/editar-brinquedo/{id}(id=${brinquedo.id})}">Editar</a>
-            <a th:href="@{/deletar-brinquedo/{id}(id=${brinquedo.id})}">Deletar</a>
+            <a th:href="@{/api/brinquedos/{id}(id=${brinquedo.id})}">Visualizar</a>
+            <a th:href="@{/api/brinquedos/edit/{id}(id=${brinquedo.id})}">Editar</a>
+            <a th:href="@{/api/brinquedos/delete/{id}(id=${brinquedo.id})}">Deletar</a>
         </td>
     </tr>
     </tbody>
 </table>
-</body>
-</html>
-

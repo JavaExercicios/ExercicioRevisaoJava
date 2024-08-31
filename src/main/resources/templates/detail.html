@@ -12,10 +12,5 @@
 <p>Classificação: <span th:text="${brinquedo.classificacao}"></span></p>
 <p>Tamanho: <span th:text="${brinquedo.tamanho}"></span></p>
 <p>Preço: <span th:text="${brinquedo.preco}"></span></p>
-<a th:href="@{/editar-brinquedo/{id}(id=${brinquedo.id})}">Editar</a>
-<a th:href="@{/deletar-brinquedo/{id}(id=${brinquedo.id})}">Deletar</a>
-<a href="/brinquedos">Voltar à Lista</a>
-</body>
-</html>
-
-
+<a th:href="@{/api/brinquedos/edit/{id}(id=${brinquedo.id})}">Editar</a>
+<a th:
