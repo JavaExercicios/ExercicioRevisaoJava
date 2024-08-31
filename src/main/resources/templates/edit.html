@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Editar Brinquedo</h1>
-<form action="/api/brinquedos/{id}" method="post">
+<form action="/api/brinquedos/edit/{id}" method="post">
     <input type="hidden" name="_method" value="put">
     <label for="nome">Nome:</label>
     <input type="text" id="nome" name="nome" th:value="${brinquedo.nome}" required><br>

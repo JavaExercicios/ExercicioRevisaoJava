@@ -6,13 +6,7 @@ import iasi.CP2.model.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import iasi.CP2.model.Brinquedo;
 import iasi.CP2.repository.BrinquedoRepositorio;
 
@@ -64,7 +58,7 @@ public class BrinquedoController {
     public String createBrinquedo(@RequestBody Brinquedo brinquedo) {
         try {
             brinquedoRepositorio.save(brinquedo);
-            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
@@ -82,7 +76,7 @@ public class BrinquedoController {
         }
     }
 
-    @PostMapping("/brinquedos/edit/{id}")
+    @PutMapping("/brinquedos/edit/{id}")
     public String updateBrinquedo(@PathVariable("id") long id, @RequestBody Brinquedo brinquedo) {
         Brinquedo _brinquedo = brinquedoRepositorio.findById(id);
         if (_brinquedo != null) {
@@ -93,7 +87,7 @@ public class BrinquedoController {
             _brinquedo.setPreco(brinquedo.getPreco());
 
             brinquedoRepositorio.save(_brinquedo);
-            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/api/brinquedos";
         } else {
             return "error";
         }
@@ -103,7 +97,7 @@ public class BrinquedoController {
     public String deleteBrinquedo(@PathVariable("id") long id) {
         try {
             brinquedoRepositorio.deleteById(id);
-            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
@@ -113,7 +107,7 @@ public class BrinquedoController {
     public String deleteAllBrinquedos() {
         try {
             brinquedoRepositorio.deleteAll();
-            return "redirect:/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
