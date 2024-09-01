@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h1>Lista de Brinquedos</h1>
-    <a href="/api/brinquedos/add" class="button">Adicionar Novo Brinquedo</a>
+    <a href="/view/brinquedos/add" class="button">Adicionar Novo Brinquedo</a>
     <table class="table">
         <thead>
         <tr>
@@ -30,9 +30,9 @@
             <td th:text="${brinquedo.tamanho}"></td>
             <td th:text="${brinquedo.preco}"></td>
             <td>
-                <a th:href="@{/api/brinquedos/{id}(id=${brinquedo.id})}" class="button">Visualizar</a>
-                <a th:href="@{/api/brinquedos/edit/{id}(id=${brinquedo.id})}" class="button">Editar</a>
-                <a th:href="@{/api/brinquedos/delete/{id}(id=${brinquedo.id})}" class="button">Deletar</a>
+                <a th:href="@{/view/brinquedos/{id}(id=${brinquedo.id})}" class="button">Visualizar</a>
+                <a th:href="@{/view/brinquedos/edit/{id}(id=${brinquedo.id})}" class="button">Editar</a>
+                <a th:href="@{/view/brinquedos/delete/{id}(id=${brinquedo.id})}" class="button">Deletar</a>
             </td>
         </tr>
         </tbody>

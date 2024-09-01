@@ -13,7 +13,7 @@ import iasi.CP2.repository.BrinquedoRepositorio;
 
 @CrossOrigin(origins = "https://exerciciorevisaojava-1.onrender.com")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/view")
 public class BrinquedoController {
     @Autowired
     BrinquedoRepositorio brinquedoRepositorio;
@@ -58,7 +58,7 @@ public class BrinquedoController {
     public String createBrinquedo(@RequestBody Brinquedo brinquedo) {
         try {
             brinquedoRepositorio.save(brinquedo);
-            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/view/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
@@ -87,7 +87,7 @@ public class BrinquedoController {
             _brinquedo.setPreco(brinquedo.getPreco());
 
             brinquedoRepositorio.save(_brinquedo);
-            return "redirect:/api/brinquedos";
+            return "redirect:/view/brinquedos";
         } else {
             return "error";
         }
@@ -97,7 +97,7 @@ public class BrinquedoController {
     public String deleteBrinquedo(@PathVariable("id") long id) {
         try {
             brinquedoRepositorio.deleteById(id);
-            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/view/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
@@ -107,7 +107,7 @@ public class BrinquedoController {
     public String deleteAllBrinquedos() {
         try {
             brinquedoRepositorio.deleteAll();
-            return "redirect:/api/brinquedos"; // Redireciona para a lista de brinquedos
+            return "redirect:/view/brinquedos"; // Redireciona para a lista de brinquedos
         } catch (Exception e) {
             return "error";
         }
